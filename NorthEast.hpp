@@ -6,6 +6,7 @@
 #include <iostream>
 #include <gsl/gsl_rng.h>
 #include <gsl/gsl_randist.h>
+#include <ctime>
 
 class site {
 	public:
