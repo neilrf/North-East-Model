@@ -3,7 +3,7 @@
 #include "NorthEast.hpp"
 void setup(class system &sys, class simulation &sim){
 	
-	//initial system time set to zero
+	//initial system time set to 0
 	sys.t = 0.0;
 	
 	//set up initial lattice

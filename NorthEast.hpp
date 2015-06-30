@@ -6,11 +6,10 @@
 #include <iostream>
 #include <gsl/gsl_rng.h>
 #include <gsl/gsl_randist.h>
-#include <ctime>
 
 class site {
 	public:
-		int num_con; // number of constaints
+		int num_con; // number of constraints
 		int num_inf; // number of sites influenced
 		std::vector<site*> constraint = std::vector<site*>(2); // pointers to constraining neighbours
 		std::vector<site*> influence = std::vector<site*>(2); //pointers to influenced neighbours
