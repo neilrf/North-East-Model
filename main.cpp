@@ -46,7 +46,7 @@ int main(int argc, char*argv[]){
 	
 	for (int i=sys.L; i>=0; i--){
 		for (int j=0; j<=sys.L; j++){
-			std::cout << sys.lattice[i][j].spin << " ";
+			std::cout << sys.lattice[i][j].update_index << " ";
 		}
 		std::cout << std::endl;
 	}

@@ -15,7 +15,7 @@ class site {
 		std::vector<site*> influence = std::vector<site*>(2); //pointers to influenced neighbours
 		int spin; //spin of site
 		int update_index; // keep track of whether site has ever updated
-		int mob_index; // is site mobile
+		int mob_index; // location of site in mobile list
 };
 
 class system {

@@ -30,6 +30,7 @@ void update(class system &sys, class simulation &sim, int i){
 			//add site to list of mobile zeros
 			sys.num_mob_zero += 1;
 			sys.mob_zero[sys.num_mob_zero - 1] = site_ptr;
+			(*site_ptr).mob_index = sys.num_mob_zero - 1;
 			//remove site from list of mobile 1's
 			if (m == sys.num_mob_one -1){
 				sys.mob_one[sys.num_mob_one-1] = nullptr;
@@ -37,6 +38,7 @@ void update(class system &sys, class simulation &sim, int i){
 			else {
 				sys.mob_one[m] = sys.mob_one[sys.num_mob_one-1];
 				sys.mob_one[sys.num_mob_one-1] = nullptr;
+				sys.mob_one[m]->mob_index = m;
 			}
 			sys.num_mob_one -= 1;
 			// check if sites influenced by active site become mobile and add to appropriate mobile list if so
@@ -46,10 +48,12 @@ void update(class system &sys, class simulation &sim, int i){
 						if(site_ptr->influence[i]->spin == 1){
 							sys.num_mob_one += 1;
 							sys.mob_one[sys.num_mob_one-1] = site_ptr->influence[i];
+							site_ptr->influence[i]->mob_index = sys.num_mob_one - 1;
 						}
 						else {
 							sys.num_mob_zero += 1;
 							sys.mob_zero[sys.num_mob_zero-1] = site_ptr->influence[i];
+							site_ptr->influence[i]->mob_index = sys.num_mob_zero - 1;
 						}
 					}
 				}
@@ -68,6 +72,7 @@ void update(class system &sys, class simulation &sim, int i){
 			//add site to list of mobile 1's
 			sys.num_mob_one += 1;
 			sys.mob_one[sys.num_mob_one - 1] = site_ptr;
+			(*site_ptr).mob_index = sys.num_mob_one - 1;
 			//remove site from list of mobile 0's
 			if (m == sys.num_mob_zero -1){
 				sys.mob_zero[sys.num_mob_zero-1] = nullptr;
@@ -75,9 +80,43 @@ void update(class system &sys, class simulation &sim, int i){
 			else {
 				sys.mob_zero[m] = sys.mob_zero[sys.num_mob_zero-1];
 				sys.mob_zero[sys.num_mob_zero-1] = nullptr;
+				sys.mob_zero[m]->mob_index = m;
 			}
 			sys.num_mob_zero -= 1;
-			// check if sites influenced by active site are no longer mobile and remove from appropriate mobile list if so
+			// check if sites influenced by active site were mobile and remove from appropriate mobile list if so
+			for (i=0; i<=1; i++){
+				if (site_ptr->influence[i] != nullptr){
+					if (site_ptr->influence[i]->mob_index != -1){
+						if (site_ptr->influence[i]->spin == 1){
+							if (site_ptr->influence[i]->mob_index = sys.num_mob_one - 1){
+								sys.mob_one[sys.num_mob_one - 1] = nullptr;
+							}
+							else {
+								
+								sys.mob_one[site_ptr->influence[i]->mob_index] = sys.mob_one[sys.num_mob_one - 1];
+								sys.mob_one[sys.num_mob_one - 1] = nullptr;
+								sys.mob_one[site_ptr->influence[i]->mob_index]->mob_index = site_ptr->influence[i]->mob_index; 
+								
+							}
+							sys.num_mob_one -= 1;
+							site_ptr->influence[i]->mob_index = -1;
+						}
+						else {
+							if (site_ptr->influence[i]->mob_index = sys.num_mob_zero - 1){
+								sys.mob_zero[sys.num_mob_zero - 1] = nullptr;
+							}
+							else {
+								sys.mob_zero[site_ptr->influence[i]->mob_index] = sys.mob_zero[sys.num_mob_zero - 1];
+								sys.mob_zero[sys.num_mob_zero - 1] = nullptr;
+								sys.mob_zero[site_ptr->influence[i]->mob_index]->mob_index = site_ptr->influence[i]->mob_index; 
+								
+							}
+							sys.num_mob_zero -= 1;
+							site_ptr->influence[i]->mob_index = -1;
+						}
+					}
+				}
+			}
 			
 		}
 	}

@@ -16,9 +16,13 @@ void setup(class system &sys, class simulation &sim){
 	sys.lattice[i][j].num_inf = 0;
 	sys.lattice[i][j].spin = 0;
 	sys.lattice[i][j].update_index = 0;
-	sys.lattice[i][j].mob_index = 0;
+	sys.lattice[i][j].mob_index = -1;
 	sys.lattice[i][j].constraint[0] = nullptr;
 	sys.lattice[i][j].influence[0] = nullptr;
+	
+	if (sys.lattice[i][j].constraint[1] == nullptr){
+		std::cout << "hurrah" << std::endl; 
+	}
 	
 	//left boundary
 	j=0;
@@ -27,7 +31,7 @@ void setup(class system &sys, class simulation &sim){
 		sys.lattice[i][j].num_inf = 1;
 		sys.lattice[i][j].spin = 0;
 		sys.lattice[i][j].update_index = 0;
-		sys.lattice[i][j].mob_index = 0;
+		sys.lattice[i][j].mob_index = -1;
 		sys.lattice[i][j].constraint[0] = nullptr;
 		sys.lattice[i][j].influence[0] = &(sys.lattice[i][j+1]);
 	}
@@ -39,7 +43,7 @@ void setup(class system &sys, class simulation &sim){
 		sys.lattice[i][j].num_inf = 1;
 		sys.lattice[i][j].spin = 0;
 		sys.lattice[i][j].update_index = 0;
-		sys.lattice[i][j].mob_index = 0;
+		sys.lattice[i][j].mob_index = -1;
 		sys.lattice[i][j].constraint[0] = nullptr;
 		sys.lattice[i][j].influence[0] = &(sys.lattice[i+1][j]);
 	}
@@ -51,7 +55,7 @@ void setup(class system &sys, class simulation &sim){
 			sys.lattice[i][j].num_inf = 2;
 			sys.lattice[i][j].spin = 1;
 			sys.lattice[i][j].update_index = 0;
-			sys.lattice[i][j].mob_index = 0;
+			sys.lattice[i][j].mob_index = -1;
 			sys.lattice[i][j].constraint[0] = &(sys.lattice[i-1][j]);
 			sys.lattice[i][j].constraint[1] = &(sys.lattice[i][j-1]);
 			sys.lattice[i][j].influence[0] = &(sys.lattice[i+1][j]);
@@ -66,7 +70,7 @@ void setup(class system &sys, class simulation &sim){
 		sys.lattice[i][j].num_inf = 1;
 		sys.lattice[i][j].spin = 1;
 		sys.lattice[i][j].update_index = 0;
-		sys.lattice[i][j].mob_index = 0;
+		sys.lattice[i][j].mob_index = -1;
 		sys.lattice[i][j].constraint[0] = &(sys.lattice[i-1][j]);
 		sys.lattice[i][j].constraint[1] = &(sys.lattice[i][j-1]);
 		sys.lattice[i][j].influence[0] = &(sys.lattice[i][j+1]);
@@ -79,7 +83,7 @@ void setup(class system &sys, class simulation &sim){
 		sys.lattice[i][j].num_inf = 1;
 		sys.lattice[i][j].spin = 1;
 		sys.lattice[i][j].update_index = 0;
-		sys.lattice[i][j].mob_index = 0;
+		sys.lattice[i][j].mob_index = -1;
 		sys.lattice[i][j].constraint[0] = &(sys.lattice[i-1][j]);
 		sys.lattice[i][j].constraint[1] = &(sys.lattice[i][j-1]);
 		sys.lattice[i][j].influence[0] = &(sys.lattice[i+1][j]);
@@ -92,13 +96,10 @@ void setup(class system &sys, class simulation &sim){
 	sys.lattice[i][j].num_inf = 0;
 	sys.lattice[i][j].spin = 1;
 	sys.lattice[i][j].update_index = 0;
-	sys.lattice[i][j].mob_index = 0;
+	sys.lattice[i][j].mob_index = -1;
 	sys.lattice[i][j].constraint[0] = &(sys.lattice[i-1][j]);
 	sys.lattice[i][j].constraint[1] = &(sys.lattice[i][j-1]);
 	sys.lattice[i][j].influence[0] = nullptr;
-	
-	//make first site mobile
-	sys.lattice[1][1].mob_index = 1;
 	
 	//set up mobile site lists	
 	sys.num_mob_one = 1;
@@ -108,6 +109,7 @@ void setup(class system &sys, class simulation &sim){
 	sys.mob_zero = std::vector<site*>(sys.L * sys.L);
 	sys.mob_one[0] = &(sys.lattice[1][1]);
 	
+	sys.lattice[1][1].mob_index = 0;
 	
 		
 }
