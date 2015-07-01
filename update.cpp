@@ -88,7 +88,7 @@ void update(class system &sys, class simulation &sim, int i){
 				if (site_ptr->influence[i] != nullptr){
 					if (site_ptr->influence[i]->mob_index != -1){
 						if (site_ptr->influence[i]->spin == 1){
-							if (site_ptr->influence[i]->mob_index = sys.num_mob_one - 1){
+							if (site_ptr->influence[i]->mob_index == sys.num_mob_one - 1){
 								sys.mob_one[sys.num_mob_one - 1] = nullptr;
 							}
 							else {
@@ -102,7 +102,7 @@ void update(class system &sys, class simulation &sim, int i){
 							site_ptr->influence[i]->mob_index = -1;
 						}
 						else {
-							if (site_ptr->influence[i]->mob_index = sys.num_mob_zero - 1){
+							if (site_ptr->influence[i]->mob_index == sys.num_mob_zero - 1){
 								sys.mob_zero[sys.num_mob_zero - 1] = nullptr;
 							}
 							else {
