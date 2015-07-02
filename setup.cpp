@@ -20,10 +20,6 @@ void setup(class system &sys, class simulation &sim){
 	sys.lattice[i][j].constraint[0] = nullptr;
 	sys.lattice[i][j].influence[0] = nullptr;
 	
-	if (sys.lattice[i][j].constraint[1] == nullptr){
-		std::cout << "hurrah" << std::endl; 
-	}
-	
 	//left boundary
 	j=0;
 	for (i=1; i<=sys.L; i++){

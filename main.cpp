@@ -32,24 +32,29 @@ int main(int argc, char*argv[]){
 	sim.sample_times = std::vector<double>(sim.num_samples+1);
 	
 	sim.sample_times[0] = 0.0;
-	for (int i=1; i<sim.num_samples; i++){
+	for (int i=1; i<=sim.num_samples; i++){
 		sim.sample_times[i] = sim.sample_times[i-1]+sim.delta_t; 
 	}
 	
 	for (int n=1; n<=sim.num_runs; n++){
 		setup(sys,sim);
 		for (int i=1; i<=sim.num_samples; i++){
-			update(sys,sim,i);
+			while (sys.t < sim.sample_times[i]){
+				update(sys,sim,i);
+			}
+			
+			output(sys,sim,i);
+			std::cout << "Sample: " << i << std::endl;
 		}
 	}
 
 	
-	for (int i=sys.L; i>=0; i--){
-		for (int j=0; j<=sys.L; j++){
-			std::cout << sys.lattice[i][j].update_index << " ";
-		}
-		std::cout << std::endl;
-	}
+	//~ for (int i=sys.L; i>=0; i--){
+		//~ for (int j=0; j<=sys.L; j++){
+			//~ std::cout << sys.lattice[i][j].update_index << " ";
+		//~ }
+		//~ std::cout << std::endl;
+	//~ }
 	
 	
 	gsl_rng_free(r);

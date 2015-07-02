@@ -4,6 +4,7 @@
 #include <vector>
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
 #include <gsl/gsl_rng.h>
 #include <gsl/gsl_randist.h>
 
@@ -44,5 +45,6 @@ class simulation {
 
 void setup(class system &sys, class simulation &sim);
 void update(class system &sys, class simulation &sim, int i);
+void output(class system sys, class simulation sim, int i);
 
 
