@@ -1,5 +1,3 @@
-
-
 #include <cmath>
 #include <vector>
 #include <cstdlib>
@@ -12,8 +10,8 @@ class site {
 	public:
 		int num_con; // number of constraints
 		int num_inf; // number of sites influenced
-		std::vector<site*> constraint = std::vector<site*>(2); // pointers to constraining neighbours
-		std::vector<site*> influence = std::vector<site*>(2); //pointers to influenced neighbours
+		std::vector<site*> constraint; // pointers to constraining neighbours
+		std::vector<site*> influence; //pointers to influenced neighbours
 		int spin; //spin of site
 		int update_index; // keep track of whether site has ever updated
 		int mob_index; // location of site in mobile list
@@ -41,10 +39,11 @@ class simulation {
 		const gsl_rng_type *rand_type;
 		const gsl_rng *rand_gen;
 		std::vector<double> sample_times; //times to take take sample for output
+		int process_flag; //to determine between NE/East/Tree
 };
 
-void setup(class system &sys, class simulation &sim);
+void setup(class system &sys, class simulation &sim, int m);
 void update(class system &sys, class simulation &sim, int i);
-void output(class system sys, class simulation sim, int i);
+void output(class system sys, class simulation sim, int i, int N);
 
 

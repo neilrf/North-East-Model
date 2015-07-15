@@ -1,6 +1,3 @@
-
-
-
 #include "NorthEast.hpp"
 
 int main(int argc, char*argv[]){
@@ -27,6 +24,7 @@ int main(int argc, char*argv[]){
 	sim.max_time = atoi(argv[3]);
 	sim.num_samples = atoi(argv[4]);
 	sim.num_runs = atoi(argv[5]);
+	sim.process_flag = atoi(argv[6]);
 	
 	sim.delta_t = sim.max_time/(double)sim.num_samples;
 	sim.sample_times = std::vector<double>(sim.num_samples+1);
@@ -37,25 +35,33 @@ int main(int argc, char*argv[]){
 	}
 	
 	for (int n=1; n<=sim.num_runs; n++){
-		setup(sys,sim);
+		setup(sys,sim,sim.process_flag);
 		for (int i=1; i<=sim.num_samples; i++){
 			while (sys.t < sim.sample_times[i]){
 				update(sys,sim,i);
 			}
 			
-			output(sys,sim,i);
-			std::cout << "Sample: " << i << std::endl;
+			//output(sys,sim,i,n);
+			//std::cout << "Sample: " << i << std::endl;
 		}
+		std::cout << "Run: " << n << std::endl;
 	}
 
-	
-	//~ for (int i=sys.L; i>=0; i--){
-		//~ for (int j=0; j<=sys.L; j++){
-			//~ std::cout << sys.lattice[i][j].update_index << " ";
-		//~ }
-		//~ std::cout << std::endl;
-	//~ }
-	
+	if (sim.process_flag == 1){
+			for (int i=sys.L; i>=0; i--){
+				for (int j=0; j<=sys.L; j++){
+					std::cout << sys.lattice[i][j].spin << " ";
+				}
+				std::cout << std::endl;
+		}
+	}
+	else if (sim.process_flag == 2){
+		for (int j=0; j<=sys.L; j++){
+				std::cout << sys.lattice[0][j].spin << " ";
+			}
+			std::cout << std::endl;
+	}
+
 	
 	gsl_rng_free(r);
 	

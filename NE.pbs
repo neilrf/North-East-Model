@@ -1,0 +1,8 @@
+#!/bin/bash
+#PBS -l nodes=1:ppn=1,pvmem=2056mb,walltime=20:00:00
+#PBS -V
+
+
+cd $PBS_O_WORKDIR
+
+GSL_RNG_SEED=2421 ./NE 2000 1.0 3000 60 1
